@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import ShareButton from "@/components/share-button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface PollOption {
   text: string;
@@ -28,6 +28,17 @@ export default function PollPageClient({
 }) {
   const [votingIndex, setVotingIndex] = useState<number | null>(null);
   const [poll, setPoll] = useState(initialPoll);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    // Any window usage goes here
+    if (typeof window !== 'undefined') {
+      // Browser-safe code
+    }
+  }, []);
+
+  if (!isMounted) return null;
 
   const handleVote = async (index: number) => {
     setVotingIndex(index);
