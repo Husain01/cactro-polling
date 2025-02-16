@@ -7,24 +7,24 @@ if (!MONGODB_URI) {
 }
 
 declare global {
-  let mongooseConnection: Promise<typeof mongoose> | null;
+  var mongooseConnection: Promise<typeof mongoose> | null;
 }
 
-let cached = (global as any).mongooseConnection;
+let cached = global.mongooseConnection;
 
 export async function connectToDatabase(): Promise<typeof mongoose> {
-  const uri = process.env.MONGODB_URI;
-
-  if (!uri) {
-    throw new Error("Missing MONGODB_URI in .env.local");
+  if (!process.env.MONGODB_URI) {
+    throw new Error('MONGODB_URI not set in environment');
   }
 
-  if (cached) return await cached;
+  if (cached) return cached;
 
-  cached = mongoose.connect(uri, {
-    bufferCommands: false,
+  cached = mongoose.connect(process.env.MONGODB_URI, {
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+    bufferCommands: false
   });
 
-  (global as any).mongooseConnection = cached;
-  return await cached;
+  global.mongooseConnection = cached;
+  return cached;
 }
