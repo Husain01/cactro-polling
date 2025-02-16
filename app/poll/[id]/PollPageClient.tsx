@@ -33,7 +33,7 @@ export default function PollPageClient({
   useEffect(() => {
     setIsMounted(true);
     // Any window usage goes here
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       // Browser-safe code
     }
   }, []);

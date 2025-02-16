@@ -1,32 +1,34 @@
 import { notFound } from "next/navigation";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
 // Server Component
-const PollPageClient = dynamic(
-  () => import('./PollPageClient'),
-  { ssr: false }
-);
+const PollPageClient = dynamic(() => import("./PollPageClient"), {
+  ssr: false,
+});
 
 async function getPollData(id: string) {
   // Use production URL first, then Vercel's URL
-  const baseUrl = process.env.NEXT_PUBLIC_URL || 
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+  const baseUrl =
+    process.env.NEXT_PUBLIC_URL ||
+    (process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000");
 
-  console.log('Base URL:', baseUrl); // Debugging
-  
+  console.log("Base URL:", baseUrl); // Debugging
+
   try {
     const res = await fetch(`${baseUrl}/api/polls/${id}`, {
-      cache: 'no-store'
+      cache: "no-store",
     });
-    
+
     if (!res.ok) {
-      console.error('API Error:', res.status, res.statusText);
+      console.error("API Error:", res.status, res.statusText);
       return null;
     }
-    
+
     return res.json();
   } catch (error) {
-    console.error('Fetch Error:', error);
+    console.error("Fetch Error:", error);
     return null;
   }
 }
