@@ -1,3 +1,84 @@
+# Quick Polling App
+
+A real-time polling application built with:
+
+- Next.js 14 (App Router)
+- Tailwind CSS + Shadcn UI
+- MongoDB
+- React Query
+
+## API Endpoints
+
+### Create Poll
+
+`POST /api/polls`
+
+```json
+{
+  "question": "Your question",
+  "options": ["Option 1", "Option 2"]
+}
+```
+
+### List All Polls
+
+`GET /api/polls`
+
+### Get Single Poll
+
+`GET /api/polls/{id}`
+
+### Submit Vote
+
+`PUT /api/polls/{id}/vote`
+
+```json
+{
+  "optionIndex": 0
+}
+```
+
+## Database Schema
+
+```javascript
+{
+  question: String,
+  options: [{
+    text: String,
+    votes: { type: Number, default: 0 }
+  }],
+  createdAt: { type: Date, default: Date.now }
+}
+```
+
+## Development
+
+1. Clone repo
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Create `.env.local`:
+
+```env
+MONGODB_URI=your_mongodb_uri
+NEXT_PUBLIC_URL=http://localhost:3000
+```
+
+4. Run dev server:
+
+```bash
+npm run dev
+```
+
+## Deployment
+
+1. Set up Vercel project
+2. Add environment variables
+3. Deploy!
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
