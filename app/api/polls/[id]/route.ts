@@ -16,6 +16,7 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
       _id: poll._id.toString(),
     });
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       { error: "Failed to fetch poll" },
       { status: 500 }

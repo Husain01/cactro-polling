@@ -15,6 +15,7 @@ export async function POST(req: Request) {
     await poll.save();
     return NextResponse.json({ id: poll._id });
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       { error: "Failed to create poll" },
       { status: 500 }
@@ -28,6 +29,7 @@ export async function GET() {
     const polls = await Poll.find().sort({ createdAt: -1 });
     return NextResponse.json(polls);
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       { error: "Failed to fetch polls" },
       { status: 500 }

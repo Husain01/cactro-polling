@@ -13,6 +13,11 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import StatsCard from "@/components/stats-card";
 import { Skeleton } from "@/components/ui/skeleton";
 
+interface PollOption {
+  text: string;
+  votes: number;
+}
+
 async function fetchResults(id: string) {
   const res = await fetch(`/api/polls/${id}`);
   return res.json();
@@ -37,7 +42,7 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
         />
         <StatsCard
           title="Leading Option"
-          value={Math.max(...data.options.map((o: any) => o.votes))}
+          value={Math.max(...data.options.map((o: PollOption) => o.votes))}
           description="Most votes received"
         />
         <StatsCard

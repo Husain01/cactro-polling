@@ -6,11 +6,24 @@ import Link from "next/link";
 import ShareButton from "@/components/share-button";
 import { useState } from "react";
 
+interface PollOption {
+  text: string;
+  votes: number;
+}
+
+interface Poll {
+  _id: string;
+  question: string;
+  options: PollOption[];
+  totalVotes: number;
+  lastVotedAt: string;
+}
+
 export default function PollPageClient({
   initialPoll,
   pollId,
 }: {
-  initialPoll: any;
+  initialPoll: Poll;
   pollId: string;
 }) {
   const [votingIndex, setVotingIndex] = useState<number | null>(null);
@@ -48,7 +61,7 @@ export default function PollPageClient({
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {poll.options.map((option: any, index: number) => (
+            {poll.options.map((option: PollOption, index: number) => (
               <Button
                 key={index}
                 type="button"
