@@ -4,13 +4,14 @@ import { notFound } from "next/navigation";
 import PollPageClient from "./PollPageClient";
 
 async function getPollData(id: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_URL || 
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
 
   const res = await fetch(`${baseUrl}/api/polls/${id}`, {
-    next: { revalidate: 60 }
+    next: { revalidate: 60 },
   });
-  
+
   if (!res.ok) return null;
   return res.json();
 }
